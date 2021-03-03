@@ -1,7 +1,5 @@
 package BankingSystem;
 
-import java.util.LinkedList;
-
 public class Account {
 
     private String accountNum;
