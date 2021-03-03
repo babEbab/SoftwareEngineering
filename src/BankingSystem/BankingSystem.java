@@ -4,11 +4,10 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Scanner;
 
-
 public class BankingSystem {
 
     Scanner sc = new Scanner(System.in);
-    private LinkedList<Account> ll = new LinkedList();
+    private LinkedList<Account> ll = new LinkedList(); // 수많은 계좌를 연결 리스트로 관리한다.
 
     void processCommand() {
         while (true) {
@@ -18,7 +17,7 @@ public class BankingSystem {
             System.out.println("4. 계좌 잔액조회");
             System.out.println("5. 계좌 이체");
             System.out.println("0. 프로그램 종료");
-            System.out.println("원하는 기능을 선택하시오: ");
+            System.out.print("원하는 기능을 선택하시오: ");
             int command = sc.nextInt();
             switch (command) {
                 case 1:
@@ -43,7 +42,6 @@ public class BankingSystem {
     }
 
     private void handleAccountTransfer() { // 계좌이체
-        // 보충 필요
         int orderAccount = checkHaveAccountNum();
         if (checkPassword(orderAccount)) {
             System.out.print("상대방의 ");
@@ -72,7 +70,7 @@ public class BankingSystem {
 
     }
 
-    private void handleBalanceInquiry() {
+    private void handleBalanceInquiry() { // 잔액 확인
         int orderAccount = checkHaveAccountNum();
         if (orderAccount != -1) {
             if (checkPassword(orderAccount)) {
@@ -89,7 +87,7 @@ public class BankingSystem {
         }
     }
 
-    private void handleWithdraw() {
+    private void handleWithdraw() { // 출금
         int orderAccount = checkHaveAccountNum();
         if (orderAccount != -1) {
             if (checkPassword(orderAccount)) {
@@ -115,7 +113,7 @@ public class BankingSystem {
         }
     }
 
-    private void handleDeposit() {
+    private void handleDeposit() { // 입금
         int orderAccount = checkHaveAccountNum();
         if (orderAccount != -1) {
             System.out.print("얼마를 입금하시겠습니까? ");
@@ -130,7 +128,7 @@ public class BankingSystem {
         }
     }
 
-    private void handleCreate() {
+    private void handleCreate() { // 계좌 개설
         System.out.print("고객의 이름을 입력하시오: ");
         String name = sc.next();
         System.out.print("고객의 비밀번호를 설정하세요: ");
@@ -149,7 +147,7 @@ public class BankingSystem {
         System.out.println(account.toString());
     }
 
-    private int checkHaveAccountNum() {
+    private int checkHaveAccountNum() { // 등록된 계좌인지 확인
         System.out.print("계좌번호를 입력하시오: ");
         String accountNum = sc.next();
 
@@ -163,7 +161,7 @@ public class BankingSystem {
         return -1;
     }
 
-    private boolean checkPassword(int orderCount) {
+    private boolean checkPassword(int orderCount) { // 비밀번호 확인
         System.out.print("비밀번호를 입력하시오: ");
         String password = sc.next();
         if (password.equals(ll.get(orderCount).getPassword())) {
@@ -175,6 +173,8 @@ public class BankingSystem {
     }
 
     private boolean checkAccountNumAlready(String accountNum) {
+        // 계좌번호 랜덤 생성 시 이미 존재하는 계좌번호와의 중복을 피하기 위해서
+        // 랜덤 생성된 번호가 이미 등록된 계좌번호인지 확인
         ListIterator it = ll.listIterator();
         while (it.hasNext()) {
             Account account = (Account) it.next();
