@@ -24,11 +24,15 @@ void handleDeposit(); // 입금
 void handleWithdraw(); // 출금
 void handleBalanceInquiry(); // 잔액 확인
 void handleAccountTransfer(); // 계좌이체
-void toString(Account); // 계좌 정보 출력
+void printAccountInfo(Account); // 계좌 정보 출력
 int changeBalance(Account*, int); // 현재 계좌의 잔액 변경 함수
+int checkHaveAccountNum();
+int checkPassword(int);
+int changeBalance(Account*, int);
+void printAccountInfo(Account);
 
 Account allAccount[100]; // 계좌 배열
-int nowAccountCount = 0; // 현재 계좌의 개수
+int curAccountCount = 0; // 현재 계좌의 개수
 
 int main() {
 
@@ -82,7 +86,7 @@ void handleAccountTransfer() { // 계좌이체
 			if (changeBalance(&allAccount[orderAccount], money * -1)) {
 				changeBalance(&allAccount[otherAccount], money);
 				printf("금액이 정상적으로 이체되었습니다.\n");
-				toString(allAccount[orderAccount]);
+				printAccountInfo(allAccount[orderAccount]);
 			}
 			else {
 				printf("계좌의 잔액이 부족합니다.\n");
@@ -105,7 +109,7 @@ void handleBalanceInquiry() { // 잔액 확인
 	int orderAccount = checkHaveAccountNum();
 	if (orderAccount != -1) {
 		if (checkPassword(orderAccount)) {
-			toString(allAccount[orderAccount]);
+			printAccountInfo(allAccount[orderAccount]);
 		}
 		else {
 			printf("틀린 비밀번호입니다.\n");
@@ -127,7 +131,7 @@ void handleWithdraw() { // 출금
 			scanf("%d", &money);
 			if (changeBalance(&allAccount[orderAccount], money * -1)) {
 				printf("금액이 정상적으로 출금되었습니다.\n");
-				toString(allAccount[orderAccount]);
+				printAccountInfo(allAccount[orderAccount]);
 			}
 			else {
 				printf("계좌의 잔액이 부족합니다.\n");
@@ -153,7 +157,7 @@ void handleDeposit() { // 입금
 		scanf("%d", &money);
 		changeBalance(&allAccount[orderAccount], money);
 		printf("금액이 정상적으로 입금되었습니다.\n");
-		toString(allAccount[orderAccount]);
+		printAccountInfo(allAccount[orderAccount]);
 	}
 	else {
 		printf("해당하는 계좌가 없습니다.\n");
@@ -162,29 +166,26 @@ void handleDeposit() { // 입금
 }
 
 void handleCreate() { // 계좌 개설
+	const static int accountSeed = 1000000;
+
 	printf("고객의 이름을 입력하시오: ");
 	char name[ACCOUNT_NAME_LENGTH];
 	scanf("%s", name);
 	printf("고객의 비밀번호를 설정하세요: ");
 	char password[ACCOUNT_PASSWORD_LENGTH];
 	scanf("%s", password);
-	int accountNum;// 계좌번호
-	while (1) {
-		srand(time(NULL)); // 매번 다른 시드값 생성
-		accountNum = rand() % 1000000;
-		if (checkAccountNumAlready(accountNum)) {
-			break;
-		}
-	}
+	int accountNum = accountSeed + curAccountCount;// 계좌번호
 
-	allAccount[nowAccountCount].accountNum = accountNum;
-	strcpy(allAccount[nowAccountCount].name, name);
-	strcpy(allAccount[nowAccountCount].password, password);
-	allAccount[nowAccountCount].balance = 0;
+	allAccount[curAccountCount] = { accountNum, name, password, 0 };
 
-	nowAccountCount++;
+	//allAccount[curAccountCount].accountNum = accountNum;
+	//strcpy(allAccount[curAccountCount].name, name);
+	//strcpy(allAccount[curAccountCount].password, password);
+	//allAccount[curAccountCount].balance = 0;
+
+	curAccountCount++;
 	printf("계좌 개설이 정상적으로 완료되었습니다.\n");
-	toString(allAccount[nowAccountCount - 1]);
+	printAccountInfo(allAccount[curAccountCount - 1]);
 }
 
 int checkHaveAccountNum() { // 등록된 계좌인지 확인
@@ -192,7 +193,7 @@ int checkHaveAccountNum() { // 등록된 계좌인지 확인
 	int accountNum;
 	scanf("%d", &accountNum);
 
-	for (int i = 0; i < nowAccountCount; i++) {
+	for (int i = 0; i < curAccountCount; i++) {
 		if (allAccount[i].accountNum == accountNum) {
 			return i;
 		}
@@ -212,20 +213,9 @@ int checkPassword(int orderCount) { // 비밀번호 확인
 	}
 }
 
-int checkAccountNumAlready(int accountNum) {
-	// 계좌번호 랜덤 생성 시 이미 존재하는 계좌번호와의 중복을 피하기 위해서
-	// 랜덤 생성된 번호가 이미 등록된 계좌번호인지 확인
-	for (int i = 0; i < nowAccountCount; i++) {
-		if (allAccount[i].accountNum == accountNum) {
-			return 0;
-		}
-	}
-	return 1;
-}
-
 int changeBalance(Account* account, int money) {
-	if ((*account).balance + money >= 0) { // 출금 시 계좌 잔액이 0원 미만이 되는 것을 방지한다
-		(*account).balance += money;
+	if (account->balance + money >= 0) { // 출금 시 계좌 잔액이 0원 미만이 되는 것을 방지한다
+		account->balance += money;
 		return 1;
 	}
 	else {
@@ -233,9 +223,8 @@ int changeBalance(Account* account, int money) {
 	}
 }
 
-void toString(Account account) { // 계좌 정보 출력용 메서드
+void printAccountInfo(Account account) { // 계좌 정보 출력용 메서드
 	printf("\n계좌번호: %d", account.accountNum);
 	printf("\n이름: %s", account.name);
 	printf("\n잔액: %d\n", account.balance);
-
 }
