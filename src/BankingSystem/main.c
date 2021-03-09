@@ -26,6 +26,10 @@ void handleBalanceInquiry(); // 잔액 확인
 void handleAccountTransfer(); // 계좌이체
 void printAccountInfo(Account); // 계좌 정보 출력
 int changeBalance(Account*, int); // 현재 계좌의 잔액 변경 함수
+int checkHaveAccountNum();
+int checkPassword(int);
+int changeBalance(Account*, int);
+void printAccountInfo(Account);
 
 Account allAccount[100]; // 계좌 배열
 int curAccountCount = 0; // 현재 계좌의 개수
