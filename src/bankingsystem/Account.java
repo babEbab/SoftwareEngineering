@@ -1,4 +1,4 @@
-package BankingSystem;
+package bankingsystem;
 
 public class Account {
 
@@ -9,6 +9,10 @@ public class Account {
 
     public String getAccountNum() {
         return accountNum;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getBalance() {

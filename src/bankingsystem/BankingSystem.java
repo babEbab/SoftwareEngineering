@@ -1,4 +1,4 @@
-package BankingSystem;
+package bankingsystem;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -51,6 +51,7 @@ public class BankingSystem {
                 int money = sc.nextInt();
                 if (ll.get(orderAccount).changeBalance(money * (-1))) {
                     System.out.println("금액이 정상적으로 이체되었습니다.");
+                    ll.get(otherAccount).changeBalance(money);
                     System.out.println(ll.get(orderAccount).toString());
                 }
                 else {
