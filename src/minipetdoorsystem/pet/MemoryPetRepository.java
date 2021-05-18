@@ -17,5 +17,4 @@ public class MemoryPetRepository implements PetRepository {
     public Optional<Pet> findPet(int petId) {
         return Optional.ofNullable(store.get(petId));
     }
-
 }

@@ -1,7 +1,5 @@
 package minipetdoorsystem.accessrecord;
 
-import minipetdoorsystem.pet.Pet;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +16,4 @@ public class MemoryAccessRecordRepository implements AccessRecordRepository {
     public AccessRecord findAccessRecord(int accessRecordId) {
         return store.get(accessRecordId);
     }
-
-
 }

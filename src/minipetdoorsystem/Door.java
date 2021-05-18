@@ -13,5 +13,4 @@ public class Door {
         state = false;
         System.out.println("문이 닫힌다");
     }
-
 }

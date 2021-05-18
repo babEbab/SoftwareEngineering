@@ -1,7 +1,5 @@
 package minipetdoorsystem.app;
 
-import minipetdoorsystem.Processor;
-
 public class AddPetApp implements App {
 
     private static final AddPetApp instance = new AddPetApp();

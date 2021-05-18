@@ -15,7 +15,7 @@ import java.util.Optional;
 public class Processor {
 
     Boolean isProcessorTurnedOn = false;
-    int AccessRecordCount = 0;
+    int accessRecordCount = 0;
     private AccessRecordRepository accessRecordRepository = new MemoryAccessRecordRepository();
     private PetRepository petRepository = new MemoryPetRepository();
     private Door door = new Door();
@@ -80,13 +80,13 @@ public class Processor {
     }
 
     void putAccessRecord() { // 출입 실패 정보 기록
-        AccessRecord accessRecord = new AccessRecord(++AccessRecordCount, "Unknown", date, time);
+        AccessRecord accessRecord = new AccessRecord(++accessRecordCount, false,"Unknown", date, time);
         accessRecordRepository.save(accessRecord);
     }
 
     void putAccessRecord(int petId) { // 출입 성공 정보 기록
         String petName = petRepository.findPet(petId).get().getName();
-        AccessRecord accessRecord = new AccessRecord(++AccessRecordCount, petName,date, time);
+        AccessRecord accessRecord = new AccessRecord(++accessRecordCount,true, petName,date, time);
         accessRecordRepository.save(accessRecord);
     }
 
@@ -94,8 +94,8 @@ public class Processor {
         if (!isProcessorTurnedOn) {
             return null;
         }
-        AccessRecord[] report = new AccessRecord[AccessRecordCount];
-        for (int i = 1; i <= AccessRecordCount; i++) {
+        AccessRecord[] report = new AccessRecord[accessRecordCount];
+        for (int i = 1; i <= accessRecordCount; i++) {
             report[i - 1] = accessRecordRepository.findAccessRecord(i);
         }
         return report;

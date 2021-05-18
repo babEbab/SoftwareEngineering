@@ -23,6 +23,7 @@ public class ReportApp implements App {
             for (AccessRecord accessRecord : report) {
                 System.out.print(" │ ");
                 System.out.print(accessRecord.getId() + " │ ");
+                System.out.print(accessRecord.getSucceed() + " │ ");
                 System.out.print(accessRecord.getDate() + " ");
                 System.out.print(accessRecord.getTime().getHour() + ":" + accessRecord.getTime().getMinute() + " │ ");
                 System.out.println(accessRecord.getPetName() + " │ ");

@@ -54,7 +54,7 @@ public class PetDoorSystem {
 
     private void handleTurnOffProcessor() {
         ControlApp controlApp = ControlApp.getInstance();
-        controlApp.turnOnProcessor();    }
+        controlApp.turnOffProcessor();    }
 
     private void handleAddPet() {
         AddPetApp addPetApp = AddPetApp.getInstance();

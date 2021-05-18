@@ -5,12 +5,14 @@ import java.time.LocalTime;
 
 public class AccessRecord {
     int id;
+    Boolean isSucceed;
     String petName;
     LocalDate date;
     LocalTime time;
 
-    public AccessRecord(int id, String petName, LocalDate date, LocalTime time) {
+    public AccessRecord(int id, Boolean isSucceed, String petName, LocalDate date, LocalTime time) {
         this.id = id;
+        this.isSucceed = isSucceed;
         this.petName = petName;
         this.date = date;
         this.time = time;
@@ -22,6 +24,14 @@ public class AccessRecord {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Boolean getSucceed() {
+        return isSucceed;
+    }
+
+    public void setSucceed(Boolean succeed) {
+        isSucceed = succeed;
     }
 
     public String getPetName() {
